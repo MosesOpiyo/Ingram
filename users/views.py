@@ -1,20 +1,52 @@
-from django.shortcuts import render
-from users.models import User
+from django.shortcuts import redirect, render
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login,logout,authenticate
 
 # Create your views here.
 def register(request):
+   
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
+         form = UserCreationForm(request.POST)
+         if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
 
-        user = User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password,confirm_password=confirm_password )
+            
+            user = authenticate(username=username,password=password)
+            login(request,user)
+            print(request.POST)
+            messages.success(request,f"Congratulations, your account was successfully created under {username}")
+            return redirect('home',messages)
+         else:
+            messages.success(request,f"Sorry, account was not created. Please try again.")
+            return redirect('register')
+
+
+    else:
+        form = UserCreationForm()
+        return render(request,'auth/register.html',{"form":form})
+        
 
    
-    return render(request,'auth/register.html')
 
 def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            login(request,user)
+            messages.success(request,f'Welcome back {username},')
+            return redirect('home')
+        else:
+            messages.success(request,"Login unsuccessful check either your username or your password")
+            return render(request,'authenticate/login.html')
+
+    else: 
+        return render(request,'authenticate/login.html')
+
     return render(request,'auth/login.html')
