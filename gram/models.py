@@ -36,5 +36,30 @@ class Picture(models.Model):
     likes = models.IntegerField()
     comments = models.ForeignKey(Comments,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
 
 
+    def get_picture_by_id(id):
+        picture = Picture.objects.get(pk=id)
+        return picture
+
+    def save_picture(self):
+         self.save()
+
+    def delete_picture(self):
+        """This deletes the image from the database using its pk
+        Args:
+            id ([type]): [description]
+        """
+        self.delete()
+    
+    def update_picture(self,new):
+        """This method will update a record of an image
+        """
+        
+        self.image = new.image
+        self.description = new.description
+        self.post_date = new.post_date
+        self.likes = new.likes
+        self.save()

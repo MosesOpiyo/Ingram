@@ -5,3 +5,6 @@ def welcome(request):
 
 def home(request):
     return render(request,'all-grams/home.html')
+
+def explore(request):
+    return render(request,'all-grams/explore.html')
