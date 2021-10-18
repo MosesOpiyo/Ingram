@@ -1,9 +1,10 @@
 from django import forms
 from django.forms import ModelForm
 
-from gram.models import Image
+from gram.models import Picture
 
-class PhotoForm(ModelForm):
+class PictureForm(ModelForm):
     class Meta:
-        model = Image
-        fields = ('image','descriptions')
+        model = Picture
+        fields = '__all__'
+        exclude = ('likes','post_date')

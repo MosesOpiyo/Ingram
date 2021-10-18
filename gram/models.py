@@ -30,7 +30,7 @@ class Comments(models.Model):
     
 
 class Picture(models.Model):
-    image = ImageField('image')
+    image = ImageField(upload_to='image/',blank=True)
     description = models.TextField(blank=True)
     post_date = models.DateField(auto_now_add=True)
     likes = models.IntegerField()
