@@ -8,3 +8,6 @@ def home(request):
 
 def explore(request):
     return render(request,'all-grams/explore.html')
+
+def profile(request):
+    return render(request,'all-grams/profile.html')

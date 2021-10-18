@@ -19,7 +19,7 @@ def register(request):
             login(request,user)
             print(request.POST)
             messages.success(request,f"Congratulations, your account was successfully created under {username}")
-            return redirect('home',messages)
+            return redirect('home')
          else:
             messages.success(request,f"Sorry, account was not created. Please try again.")
             return redirect('register')
