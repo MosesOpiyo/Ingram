@@ -12,9 +12,16 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <h1 style="color: white;">Ingram</h1>
-
             </div>
-            <a class="navbar-brand" href="{% url 'register' %}" style=" text-decoration: none;">Sign In</a>
+            {% if user.is_authenticated %}
+            <div class="navbar-options">
+                <a class="navbar-brand" href="#" style=" text-decoration: none;">{{ user.username }}</a>
+                <a class="navbar-brand" href="#" style=" text-decoration: none;">logout</a>
+            </div>
+            {% else %}
+
+
+            <a class="navbar-brand" href="{% url 'register' %}" style=" text-decoration: none;">Sign In</a>{% endif %}
         </div>
     </nav>
 </body>

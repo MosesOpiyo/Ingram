@@ -40,11 +40,11 @@ def login_user(request):
 
         if user is not None:
             login(request,user)
-            messages.success(request,f'Welcome back {username},')
+           
             return redirect('home')
         else:
             messages.success(request,"Login unsuccessful check either your username or your password")
-            return render(request,'authenticate/login.html')
+            return render(request,'auth/login.html')
 
     else: 
         return render(request,'auth/login.html')
