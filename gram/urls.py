@@ -12,6 +12,9 @@ urlpatterns = [
     path('profile/',views.profile,name='profile'),
     path('update_profile/',views.update_profile,name='update_profile'),
     path('make_a_post/',views.make_a_post,name='make_a_post'),
+    path('single_post/<int:pk>',views.single_post,name='single_post'),
+    path('comment/<int:pk>',views.comment,name='comment'),
+    path('like/<int:pk>',views.like,name="like"),
 
 ]
 

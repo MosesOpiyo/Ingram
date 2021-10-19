@@ -5,7 +5,8 @@
     </div>
     <div class="col-2" style="width:70%;height: 30vh;">
         <div class="card" style="width: 220px;height: 220px;border-radius: 150px;margin-top: 5%;">
-            <img style="width: 220px;height: 220px;border-radius: 150px;" src=" {{profile.profile_pic.url}} ">
+            {% if profile.profile_pic %}
+            <img style="width: 220px;height: 220px;border-radius: 150px;" src=" {{profile.profile_pic.url}} "> {% endif %}
         </div>
         <br>
         <h2>{{profile.username}}</h2>
@@ -13,9 +14,19 @@
         <h4>{{profile.bio}}</h4>
         <br>
         <a class="btn btn-primary " href="{% url 'update_profile' %} ">Edit Profile</a>
-
-
+        <hr style="width: 80%;">
+        <h4>Posts</h4>
+        {% for post in post %}
+        <a href="{% url 'single_post'%}">
+            <img src="{{post.image.url}}" style="width: 25%;height: 30vh;">
+        </a>{%endfor%}
 
     </div>
+
+
+
+
+
+</div>
 </div>
 {% endblock %}

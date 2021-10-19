@@ -4,48 +4,24 @@ from django.db.models.fields.files import ImageField
 from django.contrib.auth.models import User
 from django.db.models.fields.related import ForeignKey
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     username = models.CharField(max_length=50)
     bio = models.TextField(blank=True)
-    profile_pic = models.ImageField(upload_to='profile/',blank=True,default='pw4.jpg.url')
+    profile_pic = models.ImageField(upload_to='profile/',blank=True,null=True,default='pw4.jpg.url')
 
-class Comments(models.Model):
-    comment = TextField(blank=True)
 
-    def save_comment(self):
-        """
-        This adds a category to the database
-        """
-        self.save()
-
-    def delete_comment(self):
-        """
-        This removes a category from the database
-        """
-        self.delete()
-
-    def update_comment(self,new):
-        """This will update a category
-        Args:
-            new ([type]): [description]
-        """
-        self.name = new.description
-        self.save()
-
-    def __str__(self):
-        return self.name
-    
 
 class Picture(models.Model):
     user = ForeignKey(User,on_delete=models.CASCADE,null=True)
     image = models.ImageField(upload_to='image/',blank=True)
     description = models.TextField(blank=True)
+    likes = models.ManyToManyField(User,related_name="likers",blank=True)
     post_date = models.DateField(auto_now_add=True)
-    comments = models.ForeignKey(Comments,on_delete=models.CASCADE,null=True)
-
+   
     def __str__(self):
-        return self.name
+        return self.description
 
     def save_picutre(self):
         self.save()
@@ -84,3 +60,54 @@ class Picture(models.Model):
                 posts.append(picture)
 
         return posts
+    @classmethod
+    def get_comments(self):
+        """This will return all the comments related to a post
+        Returns:
+            [type]: [description]
+        """
+        comments = Comments.objects.filter(image = self)
+        return comments
+
+    def like_image(self,user):
+        """This will add a user as a liker of an image
+        """
+        self.likes.add(user)
+
+    def get_likes_total(self):
+        """This will return the number of likes of a particular post
+        """
+        return self.likes.count()
+
+    
+
+
+class Comments(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    post = models.ForeignKey(Picture,on_delete=models.CASCADE,null=True)
+    comment = TextField(blank=True)
+
+    def save_comment(self):
+        """
+        This adds a category to the database
+        """
+        self.save()
+
+    def delete_comment(self):
+        """
+        This removes a category from the database
+        """
+        self.delete()
+
+    def update_comment(self,new):
+        """This will update a category
+        Args:
+            new ([type]): [description]
+        """
+        self.name = new.description
+        self.save()
+
+    def __str__(self):
+        return self.name
+
+    
