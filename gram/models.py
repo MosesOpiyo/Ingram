@@ -1,9 +1,13 @@
 from django.db import models
-from django.db.models.fields import TextField
+from django.db.models.fields import CharField, TextField
 from django.db.models.fields.files import ImageField
 
+class User(models.Model):
+    username = CharField(max_length=50)
+    bio = TextField(blank=True)
+
 class Comments(models.Model):
-    description = TextField(blank=True)
+    comment = TextField(blank=True)
 
     def save_comment(self):
         """
@@ -33,11 +37,14 @@ class Picture(models.Model):
     image = ImageField(upload_to='image/',blank=True)
     description = models.TextField(blank=True)
     post_date = models.DateField(auto_now_add=True)
-    likes = models.IntegerField()
+    likes = models.ManyToManyField(User,related_name="likers",blank=True)
     comments = models.ForeignKey(Comments,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+    def save_picutre(self):
+        self.save()
 
 
     def get_picture_by_id(id):
@@ -63,3 +70,13 @@ class Picture(models.Model):
         self.post_date = new.post_date
         self.likes = new.likes
         self.save()
+
+    @classmethod
+    def get_images(cls,users):
+        posts = []
+        for user in users:
+            pictures = Picture.objects.filter(user = user)
+            for picture in pictures:
+                posts.append(picture)
+
+        return posts

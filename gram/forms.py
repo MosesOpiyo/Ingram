@@ -6,5 +6,6 @@ from gram.models import Picture
 class PictureForm(ModelForm):
     class Meta:
         model = Picture
-        fields = '__all__'
-        exclude = ('likes','post_date')
+        fields = ('image','description')
+        exclude = ('likes','comments')
+        

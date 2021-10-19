@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from gram.views import picture
+from gram.views import make_a_post
 from .models import *
 
 # Register your models here.
-admin.register(Picture)
+admin.site.register(Picture)
