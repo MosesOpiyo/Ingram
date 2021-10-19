@@ -4,11 +4,15 @@
         {% include "options.html" %}
     </div>
     <div class="col-2" style="width:70%;height: 30vh;">
-        <div class="card" style="background-color:black;width: 220px;height: 220px;border-radius: 150px;margin-top: 10%;">
+        <div class="card" style="width: 220px;height: 220px;border-radius: 150px;margin-top: 5%;">
+            <img style="width: 220px;height: 220px;border-radius: 150px;" src=" {{profile.profile_pic.url}} ">
         </div>
         <br>
-        <h2>Name</h2>
-        <h4>Bio</h4>
+        <h2>{{profile.username}}</h2>
+        <br>
+        <h4>{{profile.bio}}</h4>
+        <br>
+        <a class="btn btn-primary " href="{% url 'update_profile' %} ">Edit Profile</a>
 
 
 

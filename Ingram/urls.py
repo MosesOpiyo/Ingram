@@ -22,3 +22,4 @@ urlpatterns = [
     path('',include('gram.urls')),
     path('users/',include('users.urls')),
 ]
+

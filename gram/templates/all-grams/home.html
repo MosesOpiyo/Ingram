@@ -6,19 +6,22 @@
     <div class="col-2" style="width:70%;height: 30vh;">
         {% include "stories.html" %}
         <div class="container">
-            {% for picture in pictures %}
-            <div class="card" style="background-color:black;width: 70px;height: 70px;border-radius: 50px;">
-            </div>
-            <img src="{{picture.image.url}}" style="margin-left:10%;width:80%;height: 60vh;">
-            <h2 style="margin-top: 50px;">{{picture.description}}</h2>
-            {% endfor %}
+            {%for post in post %}
+            <a href="{% url 'profile' %}" style="list-style: none;text-decoration: none;">
+                <div class="card" style="background-color:transparent;width: 70px;height: 70px;border-radius: 50px;margin-bottom: 50px;">
+                    <img style="width: 70px;height: 70px;border-radius: 50px;" src="{{profile.profile_pic.url}}">
+                </div>
+                <h5 style="margin-left: 80px;margin-top:-95px ;">{{ profile.username}}</h5>
+            </a>
 
-
-
+            <img src="{{post.image.url}}" style="margin-top:50px;width:80%;height: 60vh;">
+            <br>
+            <a class="btn btn-danger" href="" style="margin-top:20px;">like</a>
+            <h5 style="margin-top: 50px;margin-left: 50px;margin-bottom: 90px;">{{post.description}}</h5>
+            {%endfor%}
 
 
         </div>
     </div>
 </div>
-
 {% endblock %}

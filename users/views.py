@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
+from gram.models import Profile
 
 # Create your views here.
 def register(request):
@@ -16,6 +17,7 @@ def register(request):
 
             
             user = authenticate(username=username,password=password)
+            Profile.objects.create(user=user)
             login(request,user)
             print(request.POST)
             messages.success(request,f"Congratulations, your account was successfully created under {username}")

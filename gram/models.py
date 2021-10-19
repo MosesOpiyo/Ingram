@@ -1,10 +1,14 @@
 from django.db import models
 from django.db.models.fields import CharField, TextField
 from django.db.models.fields.files import ImageField
+from django.contrib.auth.models import User
+from django.db.models.fields.related import ForeignKey
 
-class User(models.Model):
-    username = CharField(max_length=50)
-    bio = TextField(blank=True)
+class Profile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
+    username = models.CharField(max_length=50)
+    bio = models.TextField(blank=True)
+    profile_pic = models.ImageField(upload_to='profile/',blank=True,default='pw4.jpg.url')
 
 class Comments(models.Model):
     comment = TextField(blank=True)
@@ -34,11 +38,11 @@ class Comments(models.Model):
     
 
 class Picture(models.Model):
-    image = ImageField(upload_to='image/',blank=True)
+    user = ForeignKey(User,on_delete=models.CASCADE,null=True)
+    image = models.ImageField(upload_to='image/',blank=True)
     description = models.TextField(blank=True)
     post_date = models.DateField(auto_now_add=True)
-    likes = models.ManyToManyField(User,related_name="likers",blank=True)
-    comments = models.ForeignKey(Comments,on_delete=models.CASCADE)
+    comments = models.ForeignKey(Comments,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.name
