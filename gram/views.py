@@ -14,7 +14,8 @@ def home(request):
     return render(request,'all-grams/home.html',{'post':post,'profile':profile})
 
 def explore(request):
-    return render(request,'all-grams/explore.html')
+    post = Picture.objects.filter(user=request.user)
+    return render(request,'all-grams/explore.html',{'post':post})
 
 def profile(request):
     profile = Profile.objects.get(user=request.user)
