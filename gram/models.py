@@ -10,7 +10,27 @@ class Profile(models.Model):
     username = models.CharField(max_length=50)
     bio = models.TextField(blank=True)
     profile_pic = models.ImageField(upload_to='profile/',blank=True,null=True,default='pw4.jpg.url')
+    follows = models.ManyToManyField(User,related_name="followers",blank=True)
 
+    @classmethod
+    def get_follows(cls,users):
+            profiles_list = []
+            for user in users:
+                profiles = Profile.objects.filter(user = user)
+                for profile in profiles:
+                    profiles_list.append(profile)
+
+            return profiles_list
+    @classmethod
+    def follow_profile(self,user):
+            """This will add a user as a liker of an image
+            """
+            self.follows.add(user)
+
+    def get_follows_total(self):
+            """This will return the number of likes of a particular post
+            """
+            return self.follows.count()
 
 
 class Picture(models.Model):
@@ -78,6 +98,7 @@ class Picture(models.Model):
         """This will return the number of likes of a particular post
         """
         return self.likes.count()
+
 
     
 

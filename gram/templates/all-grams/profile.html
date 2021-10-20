@@ -13,11 +13,19 @@
         <br>
         <h4>{{profile.bio}}</h4>
         <br>
+
+        <form action="{% url 'follow' profile.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" , name="prfoile_id" , value="{{profile_id}}" , class="btn btn-info ">Follow</button>
+        </form>
+        <br>
         <a class="btn btn-primary " href="{% url 'update_profile' %} ">Edit Profile</a>
+        <br>
+        <h3>{{profile.get_follows_total}} Followers</h3>
         <hr style="width: 80%;">
         <h4>Posts</h4>
         {% for post in post %}
-        <a href="{% url 'single_post'%}">
+        <a href="">
             <img src="{{post.image.url}}" style="width: 25%;height: 30vh;">
         </a>{%endfor%}
 

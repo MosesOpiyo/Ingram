@@ -10,14 +10,14 @@ def welcome(request):
     return render(request, 'welcome.html')
 
 def home(request):
-    post = Picture.objects.filter(user=request.user)
-    profile = Profile.objects.get(user=request.user)
+    post = Picture.objects.all()
+    profile = Profile.objects.filter()
    
 
     return render(request,'all-grams/home.html',{'post':post,'profile':profile})
 
 def explore(request):
-    post = Picture.objects.filter(user=request.user)
+    post = Picture.objects.all()
     return render(request,'all-grams/explore.html',{'post':post})
 
 def profile(request):
@@ -25,6 +25,11 @@ def profile(request):
     post = Picture.objects.filter(user=request.user)
     
     return render(request,'all-grams/profile.html',{'profile':profile,'post':post})
+
+def single_profile(request,pk):
+      profile = Profile.objects.get(pk=pk)
+
+      return render(request,'all-grams/profile.html',{'profile':profile})
 
 def update_profile(request):
     if request.method == 'POST':
@@ -88,6 +93,11 @@ def like(request,pk):
     post.like_image(request.user)
     return HttpResponseRedirect(reverse('home'))
 
+def FollowView(request,pk):
+   
+    profile = get_object_or_404(Profile,pk=pk)
+    profile.follows.add(request.user)
+   
+    return HttpResponseRedirect(reverse('profile'))
 
-    
-
+ 

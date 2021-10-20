@@ -5,7 +5,10 @@
     </div>
     <div class="col-2" style="width:80%;height: 30vh;">
         {% include "search.html" %} {% for post in post %}
-        <img src="{{post.image.url}}" style="width: 25%;height: 30vh;background-color: blue;"> {%endfor%}
+        <a href="{% url 'single_post' post.pk%}">
+            <img src="{{post.image.url}}" style="width: 25%;height: 30vh;background-color: blue;"> {%endfor%}
+        </a>
+
 
     </div>
 </div>
