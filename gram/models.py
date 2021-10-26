@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.fields import CharField, TextField
 from django.db.models.fields.files import ImageField
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django.db.models.fields.related import ForeignKey
 
@@ -9,7 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     username = models.CharField(max_length=50)
     bio = models.TextField(blank=True)
-    profile_pic = models.ImageField(upload_to='profile/',blank=True,null=True,default='pw4.jpg.url')
+    profile_pic = CloudinaryField(blank=True,null=True,default='pw4.jpg.url')
     follows = models.ManyToManyField(User,related_name="followers",blank=True)
 
     @classmethod
@@ -35,7 +36,7 @@ class Profile(models.Model):
 
 class Picture(models.Model):
     user = ForeignKey(User,on_delete=models.CASCADE,null=True)
-    image = models.ImageField(upload_to='image/',blank=True)
+    image = CloudinaryField(blank=True)
     description = models.TextField(blank=True)
     likes = models.ManyToManyField(User,related_name="likers",blank=True)
     post_date = models.DateField(auto_now_add=True)

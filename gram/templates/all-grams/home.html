@@ -21,7 +21,7 @@
             <br>
             <h6 style="margin-top:20px;">{{post.get_likes_total}}likes</h6>
             <a class="btn btn-danger" href="{% url 'like' post.pk %}">like</a>
-            <form action="" method="post"></form>
+
             <h5 style="margin-top: 50px;margin-left: 20px;margin-bottom: 40px;">{{post.description}}</h5>
             {%endfor%}
 

@@ -77,11 +77,11 @@ def comment(request,pk):
         request ([type]): [description]
         pk ([type]): [description]
     """
-    
-    post = get_object_or_404(Picture,pk=pk)
-    comment = Comments(user = request.user,image = post,comment = request.POST['comment'])
-    comment.save()
-    return HttpResponseRedirect(reverse('home'))
+    if request.method == 'POST':
+        post = get_object_or_404(Picture,pk=pk)
+        comment = Comments(user = request.user,image = post, form = CommentsForm(request.POST),comment = request.POST['comment'])
+        comment.save()
+        return HttpResponseRedirect(reverse('home'))
 
 def like(request,pk):
     """This will handle adding a like to a post

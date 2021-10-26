@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gram.apps.GramConfig',
     'users.apps.UsersConfig',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
