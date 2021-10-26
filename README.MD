@@ -6,6 +6,9 @@
 ## Description
 THis is a django based instagram clone project  
 
+## Live Link
+https://ingtram2021.herokuapp.com/
+
 ## Setup/Installation Requirements
 * git clone
 * install django into your local machine
