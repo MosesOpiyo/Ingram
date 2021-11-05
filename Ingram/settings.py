@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os 
 import django_heroku
-
+import cloudinary
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,6 +44,11 @@ INSTALLED_APPS = [
     'cloudinary',
 ]
 
+cloudinary.config(
+    cloud_name='dlzyg12i7',
+    api_key='755948595873632',
+    api_secret='SXz0A7wV1NkRoDpmLN0wFi5PcRM',
+)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
